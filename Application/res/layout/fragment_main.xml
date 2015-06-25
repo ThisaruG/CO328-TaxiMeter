@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="co328.group18.taximeter.MainActivity$PlaceholderFragment" >
+
+    <TextView
+        android:id="@+id/section_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/section_label"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/section_label"
+        android:layout_alignStart="@+id/section_label"
+        android:text="@string/MainTitle"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <RadioButton
+        android:id="@+id/radioButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_marginTop="66dp"
+        android:text="RadioButton" />
+
+    <RadioButton
+        android:id="@+id/radioButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/radioButton1"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_marginTop="29dp"
+        android:text="RadioButton" />
+
+</RelativeLayout>
