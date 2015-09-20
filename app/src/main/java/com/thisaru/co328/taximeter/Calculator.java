@@ -10,9 +10,10 @@ import java.util.Calendar;
  * Created by Sachin on 8/23/2015.
  */
 public class Calculator extends Thread {
-    private String roadCondition;
-    private double roadConditionDouble;
+    private double roadCondition;
     private double distance;
+
+    //private Database db;
 
     private double time;
 
@@ -23,15 +24,29 @@ public class Calculator extends Thread {
     private LatLng startPoint;
     private LatLng stopPoint;
 
+    private String startTown = "Peradeniya";
+
+    public String getStopTown() {
+        return stopTown;
+    }
+
+    public String getStartTown() {
+
+        return startTown;
+    }
+
+    private String stopTown = "Peradeniya";
+
     private int initial = 50;
     private double fair;
 
     Calendar calendar = Calendar.getInstance();
     private int currentHour;
+    MapsActivity mapsActivity;
 
-    public Calculator(String roadCondition , LatLng startPoint, LatLng stopPoint, double start_time , double end_time){
+    public Calculator(LatLng startPoint, LatLng stopPoint, double start_time , double end_time){
 
-        switch (roadCondition) {
+        /*switch (roadCondition) {
             case "1 - Great":
                 roadConditionDouble = 1.0;
                 break;
@@ -44,7 +59,15 @@ public class Calculator extends Thread {
             case "4 - Poor":
                 roadConditionDouble = 1.5;
                 break;
-        };
+        };*/
+        //mapsActivity.getTown(pera);
+        //this.startTown = mapsActivity.getTown();
+
+        //mapsActivity.getTown(pera);
+        //this.stopTown = mapsActivity.getTown();
+
+        roadCondition = 1.0;//db.getRoadCondition(startTown, stopTown);
+
         this.startPoint = startPoint;
         this.stopPoint = stopPoint;
         this. start_time = start_time;
@@ -56,8 +79,8 @@ public class Calculator extends Thread {
         return fair;
     }
 
-    public double getRoadCondition(){
-        return roadConditionDouble;
+    public double getRoadCondition(String startTown, String stopTown){
+        return roadCondition;
     }
 
     public double getDistance(){
@@ -79,14 +102,18 @@ public class Calculator extends Thread {
         if(distance < (double) 1000){
             fair = (double) initial;
         }
-        else fair = (double) initial + (double)(distance - 1000)* (double)40;
+        else fair = (double) initial + (distance - 1000)* (double)40;
 
         //considering the road condition the fair multiplied by the factor
-        fair = fair * roadConditionDouble;
+        fair = fair * roadCondition;
 
         currentHour = calendar.get(Calendar.HOUR_OF_DAY);
         //considering the time from 8 pm to 5 am, 1.5 times the fair
-        if(!(currentHour > 19 || currentHour < 6) ) fair = fair* (double)1.5;
+        if(currentHour < 19 && currentHour > 6) {
+            fair = fair* (double)1;
+        } else {
+            fair = fair * 1.5;
+        }
 
         // if travel time is more than half and hour the amount multiplies by 1.1
         if(Travel_time > 30 * 60 * 1000) fair = fair * (double)1.1;

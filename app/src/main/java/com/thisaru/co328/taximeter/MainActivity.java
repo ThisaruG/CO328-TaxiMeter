@@ -26,11 +26,11 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity {
 
     private long startTime, endTime;
-    private LatLng startPoint, endPoint;
+    private LatLng startPoint, stopPoint;
     private String roadType;
     private MapsActivity mapsActivity = new MapsActivity();
     private Calculator calculator;
-    private TextView distanceView, fareView;
+    private TextView distanceView, fareView, sourceView, destinationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,32 +67,49 @@ public class MainActivity extends AppCompatActivity {
         // Check whether the GPS is on or off
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-            roadType = getRoadType();
+            //roadType = getRoadType();
             startTime = System.currentTimeMillis();
-            startPoint = mapsActivity.getCurrentLocation();
+
+            if (mapsActivity.getCurrentLocation() != null) {
+                startPoint = mapsActivity.getCurrentLocation();
+            } else {
+                startPoint = new LatLng(7.253937, 80.592111);
+            }
+
             distanceView = (TextView)findViewById(R.id.distanceValue);
             distanceView.setText(null);
             fareView = (TextView) findViewById(R.id.feeValue);
             fareView.setText(null);
-            //Toast.makeText(getApplicationContext(), (roadType + " " + startTime + " " + mapsActivity.getCurrentLocation()), Toast.LENGTH_LONG).show();
-        }
-        else {
+            sourceView = (TextView)findViewById(R.id.source);
+            sourceView.setText(null);
+            destinationView = (TextView)findViewById(R.id.destination);
+            destinationView.setText(null);
+        } else {
             GPSAlert();
         }
     }
 
     public void stopRide (View view) {
         endTime = System.currentTimeMillis();
-        LatLng stopPoint = mapsActivity.getCurrentLocation();
-        calculator = new Calculator(roadType, startPoint, stopPoint, startTime, endTime);
+
+        if (mapsActivity.getCurrentLocation() != null) {
+            stopPoint = mapsActivity.getCurrentLocation();
+        } else {
+            stopPoint = new LatLng(7.253937, 80.592111);
+        }
+        calculator = new Calculator(startPoint, stopPoint, startTime, endTime);
         distanceView = (TextView)findViewById(R.id.distanceValue);
         distanceView.setText(String.valueOf(calculator.getDistance()));
         fareView = (TextView) findViewById(R.id.feeValue);
         fareView.setText(String.valueOf(calculator.getFair()));
-        Toast.makeText(getApplicationContext(), ("Distance: " + calculator.getDistance() + " " + "Fare: " + calculator.getFair()), Toast.LENGTH_LONG).show();
+        sourceView = (TextView)findViewById(R.id.source);
+        sourceView.setText(String.valueOf(calculator.getStartTown()));
+        destinationView = (TextView)findViewById(R.id.destination);
+        destinationView.setText(String.valueOf(calculator.getStopTown()));
+        //Toast.makeText(getApplicationContext(), ("Distance: " + calculator.getDistance() + " " + "Fare: " + calculator.getFair()), Toast.LENGTH_LONG).show();
     }
 
-    private String getRoadType () {
+    /*private String getRoadType () {
         RadioGroup roadCondition = (RadioGroup) findViewById(R.id.roadCondition);
         if(roadCondition.getCheckedRadioButtonId()!= -1) {
             int id = roadCondition.getCheckedRadioButtonId();
@@ -104,7 +121,8 @@ public class MainActivity extends AppCompatActivity {
         else {
             return "1 - Great";
         }
-    }
+    }*/
+
     private void GPSAlert() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Location Services are currently switched off. Do you want to turn it on ?")
