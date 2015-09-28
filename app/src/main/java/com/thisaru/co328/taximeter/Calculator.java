@@ -13,7 +13,7 @@ public class Calculator extends Thread {
     private double roadCondition;
     private double distance;
 
-    //private Database db;
+    private Database db;
 
     private double time;
 
@@ -24,18 +24,13 @@ public class Calculator extends Thread {
     private LatLng startPoint;
     private LatLng stopPoint;
 
-    private String startTown = "Peradeniya";
-
     public String getStopTown() {
         return stopTown;
     }
 
     public String getStartTown() {
-
         return startTown;
     }
-
-    private String stopTown = "Peradeniya";
 
     private int initial = 50;
     private double fair;
@@ -46,27 +41,13 @@ public class Calculator extends Thread {
 
     public Calculator(LatLng startPoint, LatLng stopPoint, double start_time , double end_time){
 
-        /*switch (roadCondition) {
-            case "1 - Great":
-                roadConditionDouble = 1.0;
-                break;
-            case "2 - Good":
-                roadConditionDouble = 1.2;
-                break;
-            case "3 - Bad":
-                roadConditionDouble = 1.3;
-                break;
-            case "4 - Poor":
-                roadConditionDouble = 1.5;
-                break;
-        };*/
-        //mapsActivity.getTown(pera);
-        //this.startTown = mapsActivity.getTown();
+        mapsActivity.getTown(startPoint);
+        this.startTown = mapsActivity.getTown();
 
-        //mapsActivity.getTown(pera);
-        //this.stopTown = mapsActivity.getTown();
+        mapsActivity.getTown(stopPoint);
+        this.stopTown = mapsActivity.getTown();
 
-        roadCondition = 1.0;//db.getRoadCondition(startTown, stopTown);
+        db.getRoadCondition(startTown, stopTown);
 
         this.startPoint = startPoint;
         this.stopPoint = stopPoint;
