@@ -33,7 +33,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LatLng myLocation;
     MyLocationListener locationListener = new MyLocationListener();
     private double latitude, longitude;
-    private LatLng pera = new LatLng(7.253937, 80.592111);
 
     public String getTown() {
         getTown(getCurrentLocation());
@@ -63,8 +62,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (addresses.size() > 0) town = (addresses.get(0).getLocality());
-        else town = "Peradeniya";
+        town = (addresses.get(0).getLocality());
     }
 
     @Override
@@ -78,7 +76,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private class MyLocationListener implements LocationListener {
-        double latitude = 7.253937, longitude = 80.592111, altitude;
+        double latitude, longitude, altitude;
         double speed;
 
         @Override
