@@ -11,9 +11,9 @@ public class Database {
 
     private double roadCondtionValue = 1.0;
     public double getRoadCondition (String startTown, String stopTown) {
-        //Client client = OrchestrateClient.builder("8ef650cc-e964-43b9-b086-94510bc981b1").build();
+        Client client = OrchestrateClient.builder("8ef650cc-e964-43b9-b086-94510bc981b1").build();
 
-        /*client.kv("someCollection", "someKey")
+        client.kv("someCollection", "someKey")
                 .get(DomainObject.class)
                 .on(new ResponseAdapter<KvObject<DomainObject>>() {
                     @Override
@@ -30,7 +30,7 @@ public class Database {
                         DomainObject data = object.getValue();
                         roadConditionValue = data;
                     }
-                });*/
+                });
 
         return roadCondtionValue;
     }
